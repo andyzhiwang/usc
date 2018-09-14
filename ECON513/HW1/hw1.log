@@ -1,0 +1,140 @@
+--------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\yadto\Dropbox\USC\ECON513\HW1\hw1.log
+  log type:  text
+ opened on:   8 Sep 2016, 17:31:33
+
+. 
+. use C:\Users\yadto\Dropbox\USC\ECON513\HW1\hw1
+
+. 
+. *question 1*
+. gen exp2 = expyears^2
+
+. reg lnearningswk educyears expyears exp2
+
+      Source |       SS           df       MS      Number of obs   =       935
+-------------+----------------------------------   F(3, 931)       =     51.49
+       Model |  26.0122513         3  8.67075042   Prob > F        =    0.0000
+    Residual |  156.787751       931  .168407895   R-squared       =    0.1423
+-------------+----------------------------------   Adj R-squared   =    0.1395
+       Total |  182.800002       934  .195717347   Root MSE        =    .41038
+
+------------------------------------------------------------------------------
+lnearningswk |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   educyears |   .0923143   .0075559    12.22   0.000     .0774857    .1071429
+    expyears |    .079138    .024945     3.17   0.002      .030183     .128093
+        exp2 |  -.0019633   .0008706    -2.25   0.024    -.0036719   -.0002546
+       _cons |   4.016274   .2222775    18.07   0.000     3.580051    4.452497
+------------------------------------------------------------------------------
+
+. 
+. *question 2*
+. gen beta0 = _b[_cons]
+
+. gen beta1 = _b[educyears]
+
+. gen beta2 = _b[expyears]
+
+. gen beta3 = _b[exp2]
+
+. predict residual, res
+
+. gen zeta = beta1 - beta2 - beta3*(2*expyears-1)
+
+. su zeta
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+        zeta |        935    .0646605    .0150296   .0308459    .101524
+
+. 
+. *question 3*
+. gen educnew = educyears + 1
+
+. gen expnew = expyears - 1
+
+. gen exp2new = expnew^2
+
+. gen newwage = beta0+beta1*educnew+beta2*expnew+beta3*exp2new
+
+. egen avnewwage = mean(newwage)
+
+. egen avwage = mean(lnearningswk)
+
+. gen zetapredict = avnewwage - avwage
+
+. su zetapredict
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+ zetapredict |        935    .0646601           0   .0646601   .0646601
+
+. * the mean of zetapredict is the increasing effect of the policy*
+. * compared to zeta, they are almost the same*
+. 
+. *question 4*
+. gen educmodify = educyears + (12 - educyears) if educyears <12
+(847 missing values generated)
+
+. replace educmodify = educyears if educyears >= 12
+(847 real changes made)
+
+. gen expmodify = expyears - (12 - educyears) if educyears < 12
+(847 missing values generated)
+
+. replace expmodify = expyears if educyears >= 12
+(847 real changes made)
+
+. gen exp2modify = expmodify ^2
+
+. gen wagemodify = beta0+beta1*educmodify+beta2*expmodify+beta3*exp2modify
+
+. egen avwagemodify = mean(wagemodify)
+
+. gen zetamodify = avwagemodify - avwage
+
+. su zetamodify 
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+  zetamodify |        935    .0122766           0   .0122766   .0122766
+
+. * the mean of zetamodify is the increasing effect of the policy*
+. 
+end of do-file
+
+. egen wage = exp(avgwagemodify)
+unknown egen function exp()
+r(133);
+
+. gen wage = exp(avgwagemodify)
+avgwagemodify not found
+r(111);
+
+. gen wage = exp(avwagemodify)
+
+. dis wage
+386.29364
+
+. gen wageold = exp(lnearningswk)
+
+. dis wageold
+307.57199
+
+. gen wageold = exp(avwage)
+variable wageold already defined
+r(110);
+
+. drop wageold
+
+. gen wageold = exp(avwage)
+
+. dis wageold
+381.58023
+
+. dis wage - wageold
+4.7134094
+
+. exit, clear

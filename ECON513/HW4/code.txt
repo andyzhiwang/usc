@@ -1,0 +1,13 @@
+1.4034915
+1.4033589
+1.7094186
+1.6093953
+1.8397113
+
+
+mat V = z*X //this is matrix V
+mat M = varindio*I(391)
+mat N = varcluster*z*z'
+mat L = M + N
+mat V2inv = invsym(V'*V)
+mat vartheta = V2inv*L*V2inv

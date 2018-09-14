@@ -1,0 +1,21 @@
+Number of observations is 391
+
+/* Variables
+
+ Column           1       ID
+                  2       CHAIN (1=bk, 2=kfc, 3=roys, 4=wendys)
+            	  3       STATE (NJ=1, PA=0)
+            	  4       DSOUJERS
+		  5       DCENJERS
+                  6       DNORJERS
+ 		  7       DSHOJERS
+            	  8       DSUBPA
+                  9       DEASPA
+            	  10      EMPL0
+            	  11      WAGE0
+                  12      EMPL1
+                  13      WAGE1
+
+*/
+
+The other variables are location dummies and starting wage.

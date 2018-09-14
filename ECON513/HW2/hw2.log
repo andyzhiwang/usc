@@ -1,0 +1,115 @@
+----------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  c:\Users\yadto\Dropbox\USC\ECON513\HW2\hw2.log
+  log type:  text
+ opened on:  22 Sep 2016, 15:59:01
+
+. 
+. use c:\Users\yadto\Dropbox\USC\ECON513\HW2\hw2
+
+. 
+. * Problem 1, question 1 *
+. reg lnearningswk educyears
+
+      Source |       SS           df       MS      Number of obs   =       935
+-------------+----------------------------------   F(1, 933)       =    115.09
+       Model |  20.0734039         1  20.0734039   Prob > F        =    0.0000
+    Residual |  162.726598       933  .174412216   R-squared       =    0.1098
+-------------+----------------------------------   Adj R-squared   =    0.1089
+       Total |  182.800002       934  .195717347   Root MSE        =    .41763
+
+------------------------------------------------------------------------------
+lnearningswk |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   educyears |   .0667383   .0062209    10.73   0.000     .0545298    .0789469
+       _cons |   5.045459   .0848918    59.43   0.000     4.878858     5.21206
+------------------------------------------------------------------------------
+
+. * the coefficient on education is the partial effect of education on the log weekly wage *
+. * which is one year increase in education could bring how much percentage change in weekly wage *
+. 
+. * Problem 1, question 2 *
+. * the likely sign of the omitted vairable should be positive, so the bias should be upward *
+. reg lnearningswk educyears iq
+
+      Source |       SS           df       MS      Number of obs   =       935
+-------------+----------------------------------   F(2, 932)       =     78.38
+       Model |  26.3200815         2  13.1600407   Prob > F        =    0.0000
+    Residual |   156.47992       932   .16789691   R-squared       =    0.1440
+-------------+----------------------------------   Adj R-squared   =    0.1421
+       Total |  182.800002       934  .195717347   Root MSE        =    .40975
+
+------------------------------------------------------------------------------
+lnearningswk |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   educyears |   .0443295    .007124     6.22   0.000     .0303486    .0583104
+          iq |   .0063412   .0010396     6.10   0.000      .004301    .0083815
+       _cons |   4.705016   .1002625    46.93   0.000      4.50825    4.901783
+------------------------------------------------------------------------------
+
+. * the coefficient on education decreases after adding IQ into regression *
+. regress iq educyears
+
+      Source |       SS           df       MS      Number of obs   =       935
+-------------+----------------------------------   F(1, 933)       =    338.02
+       Model |  56280.9277         1  56280.9277   Prob > F        =    0.0000
+    Residual |  155346.531       933  166.502177   R-squared       =    0.2659
+-------------+----------------------------------   Adj R-squared   =    0.2652
+       Total |  211627.459       934  226.581862   Root MSE        =    12.904
+
+------------------------------------------------------------------------------
+          iq |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   educyears |   3.533829   .1922095    18.39   0.000     3.156616    3.911042
+       _cons |   53.68715   2.622933    20.47   0.000     48.53962    58.83469
+------------------------------------------------------------------------------
+
+. * we can see the regressors on education are both positive for the two regression equtions *
+. * according to the formula, we can see beta1hat = beta1 + beta2*cov(x1,x2)/var(x1) *
+. * since IQ and education has a positive correlation, cov(x1,x2)>0, so beta1hat has a upward bias *
+. 
+. * Problem 2, question 5 *
+. * Kx is the coefficient of x in regression of z on x, LamdaX is the coefficient of x in regression
+>  of z on x and w *
+. reg iq educyears
+
+      Source |       SS           df       MS      Number of obs   =       935
+-------------+----------------------------------   F(1, 933)       =    338.02
+       Model |  56280.9277         1  56280.9277   Prob > F        =    0.0000
+    Residual |  155346.531       933  166.502177   R-squared       =    0.2659
+-------------+----------------------------------   Adj R-squared   =    0.2652
+       Total |  211627.459       934  226.581862   Root MSE        =    12.904
+
+------------------------------------------------------------------------------
+          iq |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   educyears |   3.533829   .1922095    18.39   0.000     3.156616    3.911042
+       _cons |   53.68715   2.622933    20.47   0.000     48.53962    58.83469
+------------------------------------------------------------------------------
+
+. reg iq educyears kww
+
+      Source |       SS           df       MS      Number of obs   =       935
+-------------+----------------------------------   F(2, 932)       =    218.83
+       Model |  67623.0292         2  33811.5146   Prob > F        =    0.0000
+    Residual |   144004.43       932  154.511191   R-squared       =    0.3195
+-------------+----------------------------------   Adj R-squared   =    0.3181
+       Total |  211627.459       934  226.581862   Root MSE        =     12.43
+
+------------------------------------------------------------------------------
+          iq |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   educyears |   2.865716   .2009098    14.26   0.000     2.471428    3.260004
+         kww |   .4949999   .0577748     8.57   0.000     .3816161    .6083836
+       _cons |   44.99213   2.722911    16.52   0.000     39.64839    50.33588
+------------------------------------------------------------------------------
+
+. * so the proxy bias is smaller than the omitted variable bias, as the coefficient of x in second r
+> egression is smaller than the coefficient of x in first regression *
+. 
+. log close
+      name:  <unnamed>
+       log:  c:\Users\yadto\Dropbox\USC\ECON513\HW2\hw2.log
+  log type:  text
+ closed on:  22 Sep 2016, 15:59:01
+----------------------------------------------------------------------------------------------------

@@ -1,0 +1,37 @@
+<fulfillmentToken fulfillmentType="loan" auth="user" xmlns="http://ns.adobe.com/adept">
+  <distributor>urn:uuid:a436c042-fe64-4a8e-a71d-6d486b0e0625</distributor>
+  <operatorURL>http://acs.ebrary.com/fulfillment</operatorURL>
+  <transaction>27393445-0000000002</transaction>
+  <expiration>2016-12-20T17:12:39-08:00</expiration>
+  <resourceItemInfo>
+    <resource>urn:uuid:00000000-0000-0000-0000-000010453042</resource>
+    <resourceItem>0</resourceItem>
+    <metadata>
+      <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Econometric Analysis of Cross Section and Panel Data (2nd Edition)</dc:title>
+      <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Wooldridge, Jeffrey M.(Author)</dc:creator>
+      <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">MIT Press</dc:publisher>
+      <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">10453042</dc:identifier>
+      <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/pdf</dc:format>
+    </metadata>
+    <licenseToken>
+      <resource>urn:uuid:00000000-0000-0000-0000-000010453042</resource>
+      <permissions>
+        <display>
+          <duration>1209600</duration>
+        </display>
+        <excerpt>
+          <duration>1209600</duration>
+          <count initial="110"/>
+        </excerpt>
+        <print>
+          <duration>1209600</duration>
+          <count initial="110"/>
+        </print>
+        <play>
+          <duration>1209600</duration>
+        </play>
+      </permissions>
+    </licenseToken>
+  </resourceItemInfo>
+  <hmac>N2UksZIUg/xUPtyZ4H621QkjV90=</hmac>
+</fulfillmentToken>

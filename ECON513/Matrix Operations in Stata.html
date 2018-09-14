@@ -1,0 +1,449 @@
+
+<!-- saved from url=(0065)http://www.philender.com/courses/multivariate/notes/matstata.html -->
+<html class="gr__philender_com"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Matrix Operations in Stata</title>
+<style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style></head>
+<body bgcolor="#ffffff" data-gr-c-s-loaded="true">
+<center>
+
+<h2>
+Multivariate Analysis<br>
+Matrix Operations in Stata</h2></center>
+
+<p></p><hr size="4"><p>
+
+</p><h3>The Matrix</h3>
+
+<pre><b>matrix A = (2,1\3,2\-2,2)
+
+matrix list A</b>
+
+A[3,2]
+    c1  c2
+r1   2   1
+r2   3   2
+r3  -2   2</pre><p>
+
+</p><h3>Multiplication by a Scalar</h3>
+
+<pre><b>mat B = 3*A
+
+mat lis B</b>
+
+B[3,2]
+    c1  c2
+r1   6   3
+r2   9   6
+r3  -6   6</pre>
+<p>
+
+</p><h3>Matrix Addition &amp; Subtraction</h3>
+
+<pre><b>mat B = (1,1\4,2\-2,1)
+
+mat C = A + B
+
+mat lis C</b>
+
+C[3,2]
+    c1  c2
+r1   3   2
+r2   7   4
+r3  -4   3
+ 
+<b>mat D = A - B
+
+mat lis D</b>
+ 
+D[3,2]
+    c1  c2
+r1   1   0
+r2  -1   0
+r3   0   1
+</pre>
+<p>
+
+
+</p><h3>Matrix Multiplication</h3>
+
+<pre><b>mat D = (2,1,3\-2,2,1)
+
+mat C = D*A
+
+mat lis C</b>
+
+C[2,2]
+    c1  c2
+r1   1  10
+r2   0   4
+
+<b>mat C = A*D
+
+mat lis C</b>
+
+C[3,3]
+    c1  c2  c3
+r1   2   4   7
+r2   2   7  11
+r3  -8   2  -4
+
+<b>mat D = (2,1,3)
+
+mat C = D*A
+
+mat lis C</b>
+
+C[1,2]
+    c1  c2
+r1   1  10
+
+<b>mat C = A*D</b>
+conformability error
+r(503);</pre>
+<p>
+
+</p><h3>Transpose of a Matrix</h3>
+
+<pre><b>mat AT = A'
+
+mat lis AT</b>
+
+AT[2,3]
+    r1  r2  r3
+c1   2   3  -2
+c2   1   2   2
+
+<b>mat ATT = AT'
+
+mat lis ATT</b>
+
+ATT[3,2]
+    c1  c2
+r1   2   1
+r2   3   2
+r3  -2   2</pre>
+<p>
+
+</p><h2>Common Vectors</h2>
+
+
+<h2>Unit Vector</h2>
+ 
+<pre><b>mat U = J(3,1,1)
+
+mat lis U</b>
+
+U[3,1]
+    c1
+r1   1
+r2   1
+r3   1</pre>
+<p>
+
+</p><h2>Common Matrices</h2>
+
+<h2>Unit Matrix</h2>
+
+<pre><b>mat U = J(3,2,1)
+
+mat lis U</b>
+
+U[3,2]
+    c1  c2
+r1   1   1
+r2   1   1
+r3   1   1</pre>
+
+
+<h2>Diagonal Matrix</h2>
+
+<pre><b>mat S = (2,1,4\3,2,2\-2,2,3)
+
+mat lis S</b> 
+
+S[3,3]
+    c1  c2  c3
+r1   2   1   4
+r2   3   2   2
+r3  -2   2   3
+
+<b>mat D = diag(vecdiag(S))
+
+mat lis D</b>
+
+symmetric D[3,3]
+    c1  c2  c3
+c1   2
+c2   0   2
+c3   0   0   3
+
+<b>mat V = (3,1,2)
+
+mat D = diag(V)
+
+mat lis D</b>
+
+symmetric D[3,3]
+    c1  c2  c3
+c1   3
+c2   0   1
+c3   0   0   2</pre>
+
+<h2>Identity Matrix</h2>
+
+<pre><b>mat I = I(3)
+
+mat lis I</b>
+
+symmetric I[3,3]
+    c1  c2  c3
+r1   1
+r2   0   1
+r3   0   0   1</pre>
+<p>
+
+</p><h2>Symmetric Matrix</h2>
+
+<b>Using Stata</b>
+<pre><b>mat C = (2,1,5\1,3,4\5,4,-2)
+
+mat lis C</b>
+
+symmetric C[3,3]
+    c1  c2  c3
+r1   2
+r2   1   3
+r3   5   4  -2
+
+<b>mat CT = C'
+
+mat lis CT</b>
+
+symmetric CT[3,3]
+    r1  r2  r3
+c1   2
+c2   1   3
+c3   5   4  -2</pre>
+
+<h3>Inverse of a Matrix</h3>
+
+<pre><b>matrix A = (4,2,2 \ 4,6,8 \ -2,2,4)
+
+matrix list A</b>
+
+A[3,3]
+    c1  c2  c3
+r1   4   2   2
+r2   4   6   8
+r3  -2   2   4
+
+<b>matrix A1 = inv(A)
+
+matrix list A1</b>
+
+A1[3,3]
+      r1    r2    r3
+c1     1   -.5    .5
+c2    -4   2.5    -3
+c3   2.5  -1.5     2
+</pre>
+<p>
+
+
+
+</p><h3>Inverse &amp; Determinant of a Matrix</h3>
+
+<pre><b>mat C = (2,1,6\1,3,4\6,4,-2)
+
+mat CI = syminv(C)
+
+mat lis CI</b>
+
+symmetric CI[3,3]
+     r1   r2   r3
+c1   .6
+c2  -.2   .4
+c3    0    0    0
+
+<b>scalar d = det(C)
+
+display d</b>
+-102</pre>
+<p>
+
+</p><h3>Number of Rows &amp; Columns</h3>
+
+<pre><b>mat X = (3,2\2,-2\4,6\3,1)
+
+mat lis X</b>
+
+X[4,2]
+    c1  c2
+r1   3   2
+r2   2  -2
+r3   4   6
+r4   3   1
+
+<b>scalar r = rowsof(X)
+
+scalar c = colsof(X)
+
+display r, "  ", c</b>
+4    2</pre>
+<p>
+
+</p><h3>Computing Column &amp; Row Sums</h3>
+
+<pre><b>mat A = (2,1\3,2\-2,2)
+
+mat lis A</b>
+
+A[3,2]
+    c1  c2
+r1   2   1
+r2   3   2
+r3  -2   2
+
+<b>mat U = J(rowsof(A),1,1)
+
+mat list U</b>
+
+U[3,1]
+    c1
+r1   1
+r2   1
+r3   1
+
+<b>mat c = U'*A
+
+mat list c</b>
+
+    c1  c2
+c1   3   5</pre>
+<p>
+
+</p><h3>Computing Column &amp; Row Means</h3>
+
+<pre><b>mat cm = c/rowsof(A)
+
+mat lis cm</b>
+
+cm[1,2]
+           c1         c2
+r1          1  1.6666667</pre>
+
+<h3>Horizontal Concatenation</h3>
+
+<pre><b>mat A = (2,1\3,2\-2,2)
+
+mat lis A</b>
+
+A[3,2]
+    c1  c2
+r1   2   1
+r2   3   2
+r3  -2   2
+
+<b>mat A = (2,1\3,2\-2,2)
+
+mat lis B</b>
+
+B[3,2]
+    c1  c2
+r1   1   1
+r2   3   4
+r3   2   2
+
+<b>mat C = A,B
+
+mat lis C</b>
+
+C[3,4]
+    c1  c2  c1  c2
+r1   2   1   1   1
+r2   3   2   3   4
+r3  -2   2   2   2</pre>
+
+<h3>Vertical Concatenation (Appending)</h3>
+
+<pre><b>mat C = A\B
+
+mat lis C</b>
+
+C[6,2]
+    c1  c2
+r1   2   1
+r2   3   2
+r3  -2   2
+r1   1   1
+r2   3   4
+r3   2   2</pre>
+
+<h3>Matrix Subsetting</h3>
+
+<pre><b>/* first create large matrix to be subset */
+
+mat A = (2,1\3,2\-2,2)
+
+mat B = (1,1\3,4\5,0)
+
+mat C = A,B\B,A
+
+mat list C</b>
+
+C[6,4]
+    c1  c2  c1  c2
+r1   2   1   1   1
+r2   3   2   3   4
+r3  -2   2   5   0
+r1   1   1   2   1
+r2   3   4   3   2
+r3   5   0  -2   2
+
+<b>/*  create a matrix with 3 columns */
+
+mat D = C[1...,1..3]
+
+mat list D</b>
+
+D[6,3]
+    c1  c2  c1
+r1   2   1   1
+r2   3   2   3
+r3  -2   2   5
+r1   1   1   2
+r2   3   4   3
+r3   5   0  -2
+
+<b>/* create a matrix with 2 rows */
+
+mat D = C[1..2,1...]
+
+mat list D</b>
+
+D[2,4]
+    c1  c2  c1  c2
+r1   2   1   1   1
+r2   3   2   3   4</pre>
+
+<p>
+
+</p><p></p><hr><p><small>
+<a href="http://www.philender.com/courses/multivariate/">Multivariate Course Page</a><br>
+
+</small></p><address><small><a href="http://www.philender.com/">Phil Ender</a>, 22nov05, 30jun98</small></address>
+
+<iframe id="tmp_downloadhelper_iframe" style="display: none;" src="./Matrix Operations in Stata_files/saved_resource.html"></iframe></body></html>
